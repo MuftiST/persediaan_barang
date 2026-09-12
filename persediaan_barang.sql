@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 05, 2026 at 02:53 PM
+-- Generation Time: Sep 12, 2026 at 05:00 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `persediaan_barang`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `IDTransaksi` (OUT `p_new_id` VARCHAR(25))   BEGIN
+    DECLARE urutan INT;
+
+    -- Ambil urutan terakhir dari tabel stok_barang
+    SELECT IFNULL(MAX(RIGHT(id_transaksi,4)),0) + 1 INTO urutan
+    FROM stok_barang
+    WHERE DATE(tanggal_transaksi) = CURDATE();
+
+    -- Bentuk ID: TRS-YYYYMMDD-XXXX
+    SET p_new_id = CONCAT(
+        'TRS-',
+        DATE_FORMAT(CURDATE(), '%Y%m%d'),
+        '-',
+        LPAD(urutan,4,'0')
+    );
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -42,8 +65,8 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`idb`, `nama_barang`, `kategori_id`, `satuan_id`, `stok`, `harga_beli`, `harga_jual`) VALUES
-(2, 'mie ayam intel', 1, 2, 526, 10000.00, 15000.00),
-(3, 'baso kotak', 1, 3, 969, 6000.00, 80000.00);
+(2, 'mie ayam intel', 1, 2, 610, 10000.00, 15000.00),
+(3, 'baso kotak', 1, 3, 980, 6000.00, 80000.00);
 
 -- --------------------------------------------------------
 
@@ -135,7 +158,13 @@ INSERT INTO `stok_barang` (`id_transaksi`, `idb`, `supplier_id`, `harga_beli`, `
 ('TRS-20260822-0002', 2, 1, 7000.00, '2026-08-22 07:22:08', 'masuk', 89, 0, 606, '', NULL),
 ('TRS-20260822-0003', 2, NULL, NULL, '2026-08-22 08:58:17', 'penyesuaian', 0, 80, 526, '', NULL),
 ('TRS-20260822-0004', 3, 3, 9000.00, '2026-08-22 14:23:35', 'masuk', 90, 0, 1059, '', NULL),
-('TRS-20260822-0005', 3, NULL, NULL, '2026-08-22 14:24:19', 'keluar', 0, 90, 969, '', NULL);
+('TRS-20260822-0005', 3, NULL, NULL, '2026-08-22 14:24:19', 'keluar', 0, 90, 969, '', NULL),
+('TRS-20260905-0001', 2, 1, 2000.00, '2026-09-05 13:21:19', 'masuk', 14, 0, 540, '', 19),
+('TRS-20260912-0001', 2, NULL, 4000.00, '2026-09-12 14:31:28', 'masuk', 60, 0, 600, '', 19),
+('TRS-20260912-0002', 2, 1, 7000.00, '2026-09-12 14:50:04', 'masuk', 17, 0, 617, '', 19),
+('TRS-20260912-0003', 2, 2, 12000.00, '2026-09-12 14:52:11', 'masuk', 10, 0, 610, '', 19),
+('TRS-20260912-0004', 2, NULL, NULL, '2026-09-12 14:55:04', 'keluar', 0, 10, 600, '', 19),
+('TRS-20260912-0005', 2, 2, 3000.00, '2026-09-12 14:55:19', 'masuk', 10, 0, 610, '', 19);
 
 -- --------------------------------------------------------
 
@@ -255,7 +284,7 @@ ALTER TABLE `barang`
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -267,7 +296,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `satuan`
 --
 ALTER TABLE `satuan`
-  MODIFY `id_satuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_satuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `supplier`
