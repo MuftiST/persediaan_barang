@@ -67,6 +67,7 @@ namespace PersediaanBarang
                 DB.crud($"select * from supplier where id_supplier = '{ids}'");
                 foreach (DataRow baris in DB.ds.Tables[0].Rows)
                 {
+                    guna2Button1.Enabled = false;
                     string idsp = "" + baris["id_supplier"];
                     string nm = "" + baris["nama_supplier"];
                     string ala = "" + baris["alamat"];
@@ -105,6 +106,12 @@ namespace PersediaanBarang
             DB.crud($"update supplier set nama_supplier ='{nm}', alamat='{ala}', telepon='{telp}', email='{email}' where id_supplier='{lblid.Text}'");
             bersih();
             tampildata();
+            guna2Button1.Enabled = true;
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

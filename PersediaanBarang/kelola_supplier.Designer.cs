@@ -133,6 +133,7 @@ namespace PersediaanBarang
             this.dataGridView1.Size = new System.Drawing.Size(1120, 150);
             this.dataGridView1.TabIndex = 63;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Column1
             // 
@@ -209,6 +210,7 @@ namespace PersediaanBarang
             this.lblid.Size = new System.Drawing.Size(106, 25);
             this.lblid.TabIndex = 60;
             this.lblid.Text = "id_supplier";
+            this.lblid.Visible = false;
             // 
             // label4
             // 

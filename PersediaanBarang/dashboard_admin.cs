@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Guna.UI2.WinForms;
 
 namespace PersediaanBarang
 {
@@ -17,7 +18,9 @@ namespace PersediaanBarang
         public dashboard_admin()
         {
             InitializeComponent();
+            
         }
+       
 
         private void dashboard_admin_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -92,7 +95,6 @@ namespace PersediaanBarang
 
         private void guna2Button7_Click(object sender, EventArgs e)
         {
-            guna2Button8.Location = new Point(12, 309);
             if (pnluser.Visible == true)
             {
                 pnluser.Visible = false;
@@ -117,6 +119,15 @@ namespace PersediaanBarang
         public string id_user;
         private void dashboard_admin_Load(object sender, EventArgs e)
         {
+            foreach (Control c in pnlside.Controls)
+            {
+                if (c is Guna2Button btn)
+                {
+                    SetHoverEffect(btn, Color.FromArgb(0, 0, 255), Color.FromArgb(13, 34, 64));
+                }
+            }
+            dashkonten dk = new dashkonten() { TopLevel = false, TopMost = true };
+            KF.untukform(dk, pnlkonten);
             pnluser.Visible = false;
             pnlbrg.Visible = false;
             idu.Text = id_user;
@@ -124,12 +135,48 @@ namespace PersediaanBarang
 
         private void guna2Button3_Click(object sender, EventArgs e)
         {
+            dashkonten dk = new dashkonten() { TopLevel = false, TopMost = true };
+            KF.untukform(dk, pnlkonten);
+            btnAktif = null;
+        }
+        private Guna2Button btnAktif = null;
+        private void SetHoverEffect(Guna2Button btn, Color hover, Color normal)
+        {
+            btn.FillColor = normal;
 
+            btn.MouseEnter += (s, e) => btn.FillColor = hover;
+
+            btn.MouseLeave += (s, e) =>
+            {
+                if (btn != btnAktif)
+                    btn.FillColor = normal;
+            };
+
+            btn.Click += (s, e) =>
+            {
+                if (btnAktif != null)
+                    btnAktif.FillColor = normal;
+
+                btnAktif = btn;
+                btn.FillColor = hover;
+            };
         }
 
         private void guna2Button11_Click(object sender, EventArgs e)
         {
            
+        }
+
+        private void guna2Button9_Click(object sender, EventArgs e)
+        {
+            kelola_kategori kat = new kelola_kategori() { TopLevel = false, TopMost = true };
+            KF.untukform(kat, pnlkonten);
+        }
+
+        private void guna2Button10_Click(object sender, EventArgs e)
+        {
+            kelola_satuan satu = new kelola_satuan() { TopLevel = false, TopMost = true };
+            KF.untukform(satu, pnlkonten);
         }
     }
 }

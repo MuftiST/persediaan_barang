@@ -54,13 +54,14 @@ namespace PersediaanBarang
             string idkat = dataGridView1.Rows[brs].Cells[0].Value.ToString();
             if (kolom == 2)
             {
-
+                guna2Button1.Enabled = false;
                 DB.crud($"select * from kategori where id_kategori = '{idkat}'");
                 foreach (DataRow baris in DB.ds.Tables[0].Rows)
                 {
+                    string id = "" + baris["id_kategori"];
                     string kat = "" + baris["nama_kategori"];
                     txtkat.Text = kat;
-
+                    lblid.Text = id;
                 }
             }
             if (kolom == 3)
@@ -69,7 +70,7 @@ namespace PersediaanBarang
                 DialogResult setuju = MessageBox.Show("Apakah mau hapus? ", "Pemberitahuan", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (setuju == DialogResult.Yes)
                 {
-                    DB.crud($"delete from roles where id_role = '{idkat}'");
+                    DB.crud($"delete from kategori where id_kategori = '{idkat}'");
                 }
                 tampildata();
             }
@@ -77,9 +78,16 @@ namespace PersediaanBarang
 
         private void guna2Button2_Click(object sender, EventArgs e)
         {
+            string id = lblid.Text;
             string kat = txtkat.Text;
-            DB.crud($"UPDATE users SET nama_kategori='{kat}' WHERE id_kategori='{lblid.Text}'");
+            DB.crud($"UPDATE kategori SET nama_kategori='{kat}' WHERE id_kategori='{id}'");
+            guna2Button1.Enabled = true;
             bersih();
+            tampildata();
+        }
+
+        private void kelola_kategori_Load(object sender, EventArgs e)
+        {
             tampildata();
         }
     }

@@ -64,11 +64,11 @@ namespace PersediaanBarang
                 DB.crud($"select * from roles where id_role = '{idrole}'");
                 foreach (DataRow baris in DB.ds.Tables[0].Rows)
                 {
+                    guna2Button1.Enabled = false;
                     string nm = "" + baris["nama_role"];
                     string ket = "" + baris["keterangan"];
                     txtnama_role.Text = nm;
                     txtketerangan.Text = ket;
-                    
                 }
             }
             if (kolom == 4)
@@ -90,6 +90,7 @@ namespace PersediaanBarang
             DB.crud($"UPDATE users SET nama_role='{nm}', keterangan='{ket}' WHERE id_role='{lblid.Text}'");
             bersih();
             tampildata();
+            guna2Button1.Enabled = true;
         }
 
         private void guna2Panel1_Paint(object sender, PaintEventArgs e)

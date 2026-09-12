@@ -102,6 +102,7 @@ namespace PersediaanBarang
                 DB.crud($"select * from barang where idb = '{idb}'");
                 foreach (DataRow baris in DB.ds.Tables[0].Rows)
                 {
+                    guna2Button1.Enabled = false;
                     string idbrg = "" + baris["idb"];
                     string nm = "" + baris["nama_barang"];
                     string kat = "" + baris["kategori_id"];
@@ -126,6 +127,7 @@ namespace PersediaanBarang
                 {
                     DB.crud($"delete from barang where idb = '{idb}'");
                 }
+                bersih();
                 tampildata();
             }
         }
@@ -141,6 +143,7 @@ namespace PersediaanBarang
             DB.crud($"update barang set nama_barang='{nm}', kategori_id='{kat}', satuan_id='{sat}', stok_minimum='{stok}', harga_beli='{beli}', harga_jual='{jual}' where idb = '{label1.Text}'");
             bersih();
             tampildata();
+            guna2Button1.Enabled = true;
         }
 
         private void txtstokmin_KeyPress(object sender, KeyPressEventArgs e)
@@ -155,7 +158,7 @@ namespace PersediaanBarang
         {
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
             {
-                e.Handled = true; // blok input
+                e.Handled = true; 
             }
         }
 
@@ -163,11 +166,21 @@ namespace PersediaanBarang
         {
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
             {
-                e.Handled = true; // blok input
+                e.Handled = true;
             }
         }
 
         private void cmbkat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

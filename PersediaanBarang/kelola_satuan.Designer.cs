@@ -126,6 +126,7 @@ namespace PersediaanBarang
             this.dataGridView1.Size = new System.Drawing.Size(848, 150);
             this.dataGridView1.TabIndex = 10;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Column1
             // 
@@ -200,6 +201,7 @@ namespace PersediaanBarang
             this.Controls.Add(this.guna2Panel1);
             this.Name = "kelola_satuan";
             this.Text = "kelola_kategori";
+            this.Load += new System.EventHandler(this.kelola_satuan_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();

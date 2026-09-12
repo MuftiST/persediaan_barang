@@ -81,6 +81,4 @@ namespace PersediaanBarang
             return newID;
         }
     }
-
-
 }

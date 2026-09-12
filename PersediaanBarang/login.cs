@@ -61,13 +61,13 @@ namespace PersediaanBarang
                     if (status == "aktif")
                     {
                         string role = DB.ds.Tables[0].Rows[0]["nama_role"].ToString();
+                        DataRow baris = DB.ds.Tables[0].Rows[0];
+                        string id_user = "" + baris["id_user"];
 
                         if (role == "admin")
                         {
                             dashboard_admin da = new dashboard_admin();
                             da.Visible = true;
-                            DataRow baris = DB.ds.Tables[0].Rows[0];
-                            string id_user = "" + baris["id_user"];
                             da.id_user = id_user;
                             this.Hide();
                         }
@@ -75,8 +75,6 @@ namespace PersediaanBarang
                         {
                             dashboard_petugas dp = new dashboard_petugas();
                             dp.Visible = true;
-                            DataRow baris = DB.ds.Tables[0].Rows[0];
-                            string id_user = "" + baris["id_user"];
                             dp.id_user = id_user;
                             this.Hide();
                         }
@@ -99,6 +97,7 @@ namespace PersediaanBarang
             {
                 MessageBox.Show("Username tidak ditemukan");
             }
+
         }
     }
 }

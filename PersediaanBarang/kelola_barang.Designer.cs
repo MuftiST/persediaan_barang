@@ -250,6 +250,7 @@ namespace PersediaanBarang
             this.dataGridView1.Size = new System.Drawing.Size(1201, 150);
             this.dataGridView1.TabIndex = 14;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Column1
             // 
@@ -387,6 +388,7 @@ namespace PersediaanBarang
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(1201, 474);
             this.guna2Panel1.TabIndex = 18;
+            this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // kelola_barang
             // 

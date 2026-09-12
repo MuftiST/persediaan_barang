@@ -19,6 +19,7 @@ namespace PersediaanBarang
         public void bersih()
         {
             txtsat.Text = "";
+            lblid.Text = "";
         }
         public void tampildata()
         {
@@ -54,22 +55,22 @@ namespace PersediaanBarang
             string idsat = dataGridView1.Rows[brs].Cells[0].Value.ToString();
             if (kolom == 2)
             {
-
+                guna2Button1.Enabled = false;
                 DB.crud($"select * from satuan where id_satuan = '{idsat}'");
                 foreach (DataRow baris in DB.ds.Tables[0].Rows)
                 {
-                    string kat = "" + baris["nama_kategori"];
+                    string id = "" + baris["id_satuan"];
+                    string kat = "" + baris["nama_satuan"];
                     txtsat.Text = kat;
-
+                    lblid.Text = id;
                 }
             }
             if (kolom == 3)
             {
-
                 DialogResult setuju = MessageBox.Show("Apakah mau hapus? ", "Pemberitahuan", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (setuju == DialogResult.Yes)
                 {
-                    DB.crud($"delete from roles where id_role = '{idsat}'");
+                    DB.crud($"delete from satuan where id_satuan = '{idsat}'");
                 }
                 tampildata();
             }
@@ -77,9 +78,21 @@ namespace PersediaanBarang
 
         private void guna2Button2_Click(object sender, EventArgs e)
         {
+            string id = lblid.Text;
             string sat = txtsat.Text;
-            DB.crud($"UPDATE users SET nama_satuan='{sat}' WHERE id_satuan='{lblid.Text}'");
+            DB.crud($"UPDATE satuan SET nama_satuan='{sat}' WHERE id_satuan='{id}'");
+            guna2Button1.Enabled = true;
             bersih();
+            tampildata();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void kelola_satuan_Load(object sender, EventArgs e)
+        {
             tampildata();
         }
     }

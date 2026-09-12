@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace PersediaanBarang
 {
@@ -31,7 +32,7 @@ namespace PersediaanBarang
         public void tampildata()
         {
             dataGridView1.Rows.Clear();
-            DB.crud("select * from stok_barang");
+            DB.crud("select * from stok_barang order by id_transaksi desc");
             foreach (DataRow baris in DB.ds.Tables[0].Rows)
             {
                 string idtr = "" + baris["id_transaksi"];
@@ -198,7 +199,6 @@ namespace PersediaanBarang
                 DB.crud($"UPDATE barang SET stok = {saldoAkhir} WHERE idb = '{idb}'");
                 tampildata();
                 bersih();
-                // ambil ID transaksi baru dari procedure
                 lbltrans.Text = DB.GetNewIDFromProcedure();
             }
             else
@@ -233,6 +233,7 @@ namespace PersediaanBarang
                 DB.crud($"select stok_barang.*, barang.nama_barang from barang INNER JOIN stok_barang ON barang.idb = stok_barang.idb where id_transaksi = '{idstok}'");
                 foreach (DataRow baris in DB.ds.Tables[0].Rows)
                 {
+                    guna2Button1.Enabled = false;
                     string idt = "" + baris["id_transaksi"];
                     string idb = "" + baris["idb"];
                     string supp = "" + baris["supplier_id"];
@@ -274,7 +275,73 @@ namespace PersediaanBarang
 
         private void guna2Button2_Click(object sender, EventArgs e)
         {
+            string idtrans = lbltrans.Text;
+            string idb = cmbidb.SelectedValue.ToString();
+            string jns = cmbjenis.Text;
 
+            string ids = (jns == "masuk" && cmbids.SelectedValue != null && !string.IsNullOrWhiteSpace(cmbids.SelectedValue.ToString()))
+                            ? cmbids.SelectedValue.ToString()
+                            : null;
+
+            decimal? beli = (jns == "masuk" && !string.IsNullOrWhiteSpace(txtbeli.Text))
+                            ? Convert.ToDecimal(txtbeli.Text)
+                            : (decimal?)null;
+
+            int msk = string.IsNullOrWhiteSpace(txtmasuk.Text) ? 0 : Convert.ToInt32(txtmasuk.Text);
+            int klr = string.IsNullOrWhiteSpace(txtkeluar.Text) ? 0 : Convert.ToInt32(txtkeluar.Text);
+            string ket = txtket.Text;
+            string idu = id_user.Text;
+
+            int stokAwal = GetStokBarang(Convert.ToInt32(idb));
+
+            int saldoAkhir = stokAwal + msk - klr;
+
+            string query = @"UPDATE stok_barang SET 
+    idb=@idb, 
+    supplier_id=@ids, 
+    harga_beli=@beli, 
+    jenis_transaksi=@jns, 
+    jumlah_masuk=@msk, 
+    jumlah_keluar=@klr, 
+    saldo_akhir=@saldoAkhir, 
+    keterangan=@ket, 
+    id_user=@idu 
+    WHERE id_transaksi=@idtrans";
+
+            using (var conn = DB.getConnection())
+            {
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idb", idb);
+                    cmd.Parameters.AddWithValue("@ids", (object)ids ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@beli", (object)beli ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@jns", jns);
+                    cmd.Parameters.AddWithValue("@msk", msk);
+                    cmd.Parameters.AddWithValue("@klr", klr);
+                    cmd.Parameters.AddWithValue("@saldoAkhir", saldoAkhir);
+                    cmd.Parameters.AddWithValue("@ket", ket);
+                    cmd.Parameters.AddWithValue("@idu", idu);
+                    cmd.Parameters.AddWithValue("@idtrans", idtrans);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                string queryBarang = "UPDATE barang SET stok=@saldoAkhir WHERE idb=@idb";
+                using (var cmdBarang = new MySqlCommand(queryBarang, conn))
+                {
+                    cmdBarang.Parameters.AddWithValue("@saldoAkhir", saldoAkhir);
+                    cmdBarang.Parameters.AddWithValue("@idb", idb);
+                    cmdBarang.ExecuteNonQuery();
+                }
+            }
+
+
+            guna2Button1.Enabled = true;
+            bersih();
+            tampildata();
         }
 
         private void txtmasuk_KeyPress(object sender, KeyPressEventArgs e)
@@ -328,6 +395,16 @@ namespace PersediaanBarang
                 txtkeluar.Enabled = false;
                 txtsaldo.Text = stokAwal.ToString();
             }
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
+        {
 
         }
     }

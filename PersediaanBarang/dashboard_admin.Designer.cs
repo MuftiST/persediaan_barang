@@ -188,7 +188,7 @@ namespace PersediaanBarang
             this.guna2Button7.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.guna2Button7.Location = new System.Drawing.Point(3, 104);
             this.guna2Button7.Name = "guna2Button7";
-            this.guna2Button7.Size = new System.Drawing.Size(224, 45);
+            this.guna2Button7.Size = new System.Drawing.Size(214, 45);
             this.guna2Button7.TabIndex = 10;
             this.guna2Button7.Text = "User";
             this.guna2Button7.Click += new System.EventHandler(this.guna2Button7_Click);
@@ -287,6 +287,7 @@ namespace PersediaanBarang
             this.guna2Button10.Size = new System.Drawing.Size(214, 45);
             this.guna2Button10.TabIndex = 10;
             this.guna2Button10.Text = "Satuan";
+            this.guna2Button10.Click += new System.EventHandler(this.guna2Button10_Click);
             // 
             // guna2Button9
             // 
@@ -305,6 +306,7 @@ namespace PersediaanBarang
             this.guna2Button9.Size = new System.Drawing.Size(211, 45);
             this.guna2Button9.TabIndex = 9;
             this.guna2Button9.Text = "Kategori";
+            this.guna2Button9.Click += new System.EventHandler(this.guna2Button9_Click);
             // 
             // guna2Button2
             // 

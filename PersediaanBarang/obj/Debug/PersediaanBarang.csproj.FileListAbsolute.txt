@@ -31,3 +31,4 @@ C:\Users\Mufti\source\repos\PersediaanBarang\PersediaanBarang\obj\Debug\Persedia
 C:\Users\Mufti\source\repos\PersediaanBarang\PersediaanBarang\obj\Debug\PersediaanBarang.csproj.AssemblyReference.cache
 C:\Users\Mufti\source\repos\PersediaanBarang\PersediaanBarang\obj\Debug\PersediaanBarang.kelola_satuan.resources
 C:\Users\Mufti\source\repos\PersediaanBarang\PersediaanBarang\obj\Debug\PersediaanBarang.kelola_kategori.resources
+C:\Users\Mufti\source\repos\PersediaanBarang\PersediaanBarang\obj\Debug\PersediaanBarang.dashkonten.resources
