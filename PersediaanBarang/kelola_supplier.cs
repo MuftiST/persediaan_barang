@@ -113,5 +113,20 @@ namespace PersediaanBarang
         {
 
         }
+
+        private void txtcari_TextChanged(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Clear();
+            DB.crud($"select * from supplier where nama_supplier like '%{txtcari.Text}%'");
+            foreach (DataRow baris in DB.ds.Tables[0].Rows)
+            {
+                string ids = "" + baris["id_supplier"];
+                string nm = "" + baris["nama_supplier"];
+                string ala = "" + baris["alamat"];
+                string telp = "" + baris["telepon"];
+                string email = "" + baris["email"];
+                dataGridView1.Rows.Add(ids, nm, ala, telp, email);
+            }
+        }
     }
 }

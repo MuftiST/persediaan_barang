@@ -97,5 +97,18 @@ namespace PersediaanBarang
         {
 
         }
+
+        private void txtcari_TextChanged(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Clear();
+            DB.crud($"select * from roles where nama_role like '%{txtcari.Text}%'");
+            foreach (DataRow brs in DB.ds.Tables[0].Rows)
+            {
+                string idr = "" + brs["id_role"];
+                string nmr = "" + brs["nama_role"];
+                string ket = "" + brs["keterangan"];
+                dataGridView1.Rows.Add(idr, nmr, ket);
+            }
+        }
     }
 }

@@ -184,5 +184,22 @@ namespace PersediaanBarang
         {
 
         }
+
+        private void txtcari_TextChanged(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Clear();
+            DB.crud($"select * from barang where nama_barang like '%{txtcari.Text}%'");
+            foreach (DataRow baris in DB.ds.Tables[0].Rows)
+            {
+                string idb = "" + baris["idb"];
+                string nm = "" + baris["nama_barang"];
+                string kat = "" + baris["kategori_id"];
+                string sat = "" + baris["satuan_id"];
+                string stok = "" + baris["stok"];
+                string beli = "" + baris["harga_beli"];
+                string jual = "" + baris["harga_jual"];
+                dataGridView1.Rows.Add(idb, nm, kat, sat, stok, beli, jual);
+            }
+        }
     }
 }

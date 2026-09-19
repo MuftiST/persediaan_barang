@@ -200,5 +200,23 @@ namespace PersediaanBarang
         {
             
         }
+
+        private void txtcari_TextChanged(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Clear();
+            DB.crud($"select * from users inner join roles on roles.id_role = users.id_role where nama like '%{txtcari.Text}%'");
+            foreach (DataRow baris in DB.ds.Tables[0].Rows)
+            {
+                string idu = "" + baris["id_user"];
+                string nm = "" + baris["nama"];
+                string user = "" + baris["username"];
+                string pass = "" + baris["password"];
+                string role = "" + baris["nama_role"];
+                string email = "" + baris["email"];
+                string telp = "" + baris["no_telp"];
+                string status = "" + baris["status"];
+                dataGridView1.Rows.Add(idu, nm, user, pass, role, email, telp, status);
+            }
+        }
     }
 }

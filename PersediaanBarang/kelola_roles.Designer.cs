@@ -44,6 +44,7 @@ namespace PersediaanBarang
             this.Column5 = new System.Windows.Forms.DataGridViewImageColumn();
             this.lblid = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.txtcari = new Guna.UI2.WinForms.Guna2TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.guna2Panel1.SuspendLayout();
             this.SuspendLayout();
@@ -151,7 +152,7 @@ namespace PersediaanBarang
             this.Column3,
             this.Column4,
             this.Column5});
-            this.dataGridView1.Location = new System.Drawing.Point(59, 387);
+            this.dataGridView1.Location = new System.Drawing.Point(59, 456);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
@@ -220,12 +221,34 @@ namespace PersediaanBarang
             this.guna2Panel1.TabIndex = 9;
             this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
+            // txtcari
+            // 
+            this.txtcari.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtcari.DefaultText = "";
+            this.txtcari.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtcari.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtcari.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtcari.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtcari.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtcari.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtcari.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtcari.IconLeft = ((System.Drawing.Image)(resources.GetObject("txtcari.IconLeft")));
+            this.txtcari.Location = new System.Drawing.Point(602, 388);
+            this.txtcari.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtcari.Name = "txtcari";
+            this.txtcari.PlaceholderText = "Cari roles";
+            this.txtcari.SelectedText = "";
+            this.txtcari.Size = new System.Drawing.Size(305, 48);
+            this.txtcari.TabIndex = 73;
+            this.txtcari.TextChanged += new System.EventHandler(this.txtcari_TextChanged);
+            // 
             // kelola_roles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(238)))), ((int)(((byte)(250)))));
-            this.ClientSize = new System.Drawing.Size(1021, 549);
+            this.ClientSize = new System.Drawing.Size(1021, 657);
+            this.Controls.Add(this.txtcari);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.guna2Panel1);
             this.Name = "kelola_roles";
@@ -254,5 +277,6 @@ namespace PersediaanBarang
         private System.Windows.Forms.DataGridViewImageColumn Column5;
         private System.Windows.Forms.Label lblid;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
+        private Guna.UI2.WinForms.Guna2TextBox txtcari;
     }
 }

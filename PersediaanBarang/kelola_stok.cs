@@ -45,7 +45,8 @@ namespace PersediaanBarang
                 string klr = "" + baris["jumlah_keluar"];
                 string sld = "" + baris["saldo_akhir"];
                 string ket = "" + baris["keterangan"];
-                dataGridView1.Rows.Add(idtr, idb, idsup, beli, tgl, jns, msk, klr, sld, ket);
+                string user = "" + baris["id_user"];
+                dataGridView1.Rows.Add(idtr, idb, idsup, beli, tgl, jns, msk, klr, sld, ket, user);
             }
         }
         private void kelola_stok_Load(object sender, EventArgs e)
@@ -166,47 +167,86 @@ namespace PersediaanBarang
 
         private void guna2Button1_Click(object sender, EventArgs e)
         {
-            if ((!string.IsNullOrWhiteSpace(txtmasuk.Text) || !string.IsNullOrWhiteSpace(txtkeluar.Text)) // salah satu wajib isi
-              && !string.IsNullOrWhiteSpace(cmbjenis.Text)
-              && !string.IsNullOrWhiteSpace(cmbidb.Text)
-)
+            bool isMasuk = cmbjenis.Text == "masuk";
+            List<string> pesanError = new List<string>();
+
+            if (string.IsNullOrWhiteSpace(txtmasuk.Text) && string.IsNullOrWhiteSpace(txtkeluar.Text))
+                pesanError.Add("- Jumlah Masuk atau Jumlah Keluar (salah satu wajib diisi)");
+
+            if (string.IsNullOrWhiteSpace(cmbjenis.Text))
+                pesanError.Add("- Jenis Transaksi belum dipilih");
+
+            if (string.IsNullOrWhiteSpace(cmbidb.Text))
+                pesanError.Add("- Barang belum dipilih");
+
+            if (isMasuk && string.IsNullOrWhiteSpace(txtbeli.Text))
+                pesanError.Add("- Harga Beli wajib diisi untuk jenis transaksi 'masuk'");
+
+            if (isMasuk && (cmbids.SelectedValue == null || string.IsNullOrWhiteSpace(cmbids.SelectedValue.ToString())))
+                pesanError.Add("- Supplier wajib dipilih untuk jenis transaksi 'masuk'");
+
+            if (pesanError.Count > 0)
             {
-                string idtrans = lbltrans.Text;
-                string idb = cmbidb.SelectedValue.ToString();
-                string jns = cmbjenis.Text;
-                string ids = (jns == "masuk" && cmbids.SelectedValue != null && !string.IsNullOrWhiteSpace(cmbids.SelectedValue.ToString()))
-                                ? $"'{cmbids.SelectedValue}'"
-                                : "NULL";
-                string beli = (jns == "masuk" && !string.IsNullOrWhiteSpace(txtbeli.Text))
-                                ? txtbeli.Text
-                                : "NULL";
-                string msk = string.IsNullOrWhiteSpace(txtmasuk.Text) ? "0" : txtmasuk.Text;
-                string klr = string.IsNullOrWhiteSpace(txtkeluar.Text) ? "0" : txtkeluar.Text;
-                string ket = txtket.Text;
-                string idu = id_user.Text;
-                int stokAwal = GetStokBarang(Convert.ToInt32(idb));
-                int saldoAkhir = stokAwal;
-                if (!string.IsNullOrWhiteSpace(msk) && msk != "0")
-                {
-                    saldoAkhir = stokAwal + Convert.ToInt32(msk);
-                }
-                else if (!string.IsNullOrWhiteSpace(klr) && klr != "0")
-                {
-                    saldoAkhir = stokAwal - Convert.ToInt32(klr);
-                }
-                DB.crud($"INSERT INTO stok_barang (id_transaksi, idb, supplier_id, harga_beli, jenis_transaksi, jumlah_masuk, jumlah_keluar, saldo_akhir, keterangan, id_user) " +
-                        $"VALUES ('{idtrans}', '{idb}', {ids}, {beli}, '{jns}', {msk}, {klr}, {saldoAkhir}, '{ket}', '{idu}')");
-                DB.crud($"UPDATE barang SET stok = {saldoAkhir} WHERE idb = '{idb}'");
-                tampildata();
-                bersih();
-                lbltrans.Text = DB.GetNewIDFromProcedure();
+                string detail = string.Join("\n", pesanError);
+                MessageBox.Show("Data belum lengkap, mohon lengkapi field berikut:\n\n" + detail,
+                                 "Validasi Gagal",
+                                 MessageBoxButtons.OK,
+                                 MessageBoxIcon.Warning);
+                return;
             }
-            else
+            string idtrans = lbltrans.Text;
+            string idb = cmbidb.SelectedValue.ToString();
+            string jns = cmbjenis.Text;
+            string ids = (isMasuk && cmbids.SelectedValue != null && !string.IsNullOrWhiteSpace(cmbids.SelectedValue.ToString()))
+                            ? $"'{cmbids.SelectedValue}'"
+                            : "NULL";
+            string beli = (isMasuk && !string.IsNullOrWhiteSpace(txtbeli.Text))
+                            ? txtbeli.Text
+                            : "NULL";
+            string msk = string.IsNullOrWhiteSpace(txtmasuk.Text) ? "0" : txtmasuk.Text;
+            string klr = string.IsNullOrWhiteSpace(txtkeluar.Text) ? "0" : txtkeluar.Text;
+            string ket = string.IsNullOrWhiteSpace(txtket.Text) ? "-" : txtket.Text;
+            string idu = id_user.Text;
+            string ringkasan =
+                $"ID Transaksi   : {idtrans}\n" +
+                $"Barang         : {cmbidb.Text}\n" +
+                $"Jenis Transaksi: {jns}\n" +
+                (isMasuk ? $"Supplier       : {cmbids.Text}\n" : "") +
+                (isMasuk ? $"Harga Beli     : {beli}\n" : "") +
+                $"Jumlah Masuk   : {msk}\n" +
+                $"Jumlah Keluar  : {klr}\n" +
+                $"Keterangan     : {ket}\n\n" +
+                "Apakah data di atas sudah benar dan ingin disimpan?";
+
+            DialogResult konfirmasi = MessageBox.Show(ringkasan,
+                                                       "Konfirmasi Input Data",
+                                                       MessageBoxButtons.YesNo,
+                                                       MessageBoxIcon.Question);
+
+            if (konfirmasi != DialogResult.Yes)
             {
-                MessageBox.Show("Data belum lengkap, isi semua field wajib!");
+                return;
+            }
+            int stokAwal = GetStokBarang(Convert.ToInt32(idb));
+            int saldoAkhir = stokAwal;
+            if (!string.IsNullOrWhiteSpace(msk) && msk != "0")
+            {
+                saldoAkhir = stokAwal + Convert.ToInt32(msk);
+            }
+            else if (!string.IsNullOrWhiteSpace(klr) && klr != "0")
+            {
+                saldoAkhir = stokAwal - Convert.ToInt32(klr);
             }
 
+            DB.crud($"INSERT INTO stok_barang (id_transaksi, idb, supplier_id, harga_beli, jenis_transaksi, jumlah_masuk, jumlah_keluar, saldo_akhir, keterangan, id_user) " +
+                    $"VALUES ('{idtrans}', '{idb}', {ids}, {beli}, '{jns}', {msk}, {klr}, {saldoAkhir}, '{ket}', '{idu}')");
+            DB.crud($"UPDATE barang SET stok = {saldoAkhir} WHERE idb = '{idb}'");
+
+            tampildata();
+            bersih();
             lbltrans.Text = DB.GetNewIDFromProcedure();
+
+            MessageBox.Show("Data berhasil disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         int stokAwal = GetStokBarang(idBarang);
         private void cmbidb_SelectedIndexChanged(object sender, EventArgs e)
@@ -225,123 +265,12 @@ namespace PersediaanBarang
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int brs = e.RowIndex;
-            int kolom = e.ColumnIndex;
-            string idstok = dataGridView1.Rows[brs].Cells[0].Value.ToString();
-            if (kolom == 10)
-            {
-                DB.crud($"select stok_barang.*, barang.nama_barang from barang INNER JOIN stok_barang ON barang.idb = stok_barang.idb where id_transaksi = '{idstok}'");
-                foreach (DataRow baris in DB.ds.Tables[0].Rows)
-                {
-                    guna2Button1.Enabled = false;
-                    string idt = "" + baris["id_transaksi"];
-                    string idb = "" + baris["idb"];
-                    string supp = "" + baris["supplier_id"];
-                    string beli = "" + baris["harga_beli"];
-                    string jenis = "" + baris["jenis_transaksi"];
-                    string msk = "" + baris["jumlah_masuk"];
-                    string klr = "" + baris["jumlah_keluar"];
-                    string akhir = "" + baris["saldo_akhir"];
-                    string ket = "" + baris["keterangan"];
-
-                    lbltrans.Text = idt;
-                    txtbeli.Text = beli;
-                    txtmasuk.Text = msk;
-                    txtkeluar.Text = klr;
-                    txtsaldo.Text = akhir;
-                    txtket.Text = ket;
-
-                    int idxDb = cmbidb.FindStringExact(idb);
-                    if (idxDb >= 0) cmbidb.SelectedIndex = idxDb;
-
-                    int idxSup = cmbids.FindStringExact(supp);
-                    if (idxSup >= 0) cmbids.SelectedIndex = idxSup;
-
-                    int idxJenis = cmbjenis.FindStringExact(jenis);
-                    if (idxJenis >= 0) cmbjenis.SelectedIndex = idxJenis;
-                }
-            }
-            if (kolom == 11)
-            {
-
-                DialogResult setuju = MessageBox.Show("Apakah mau hapus? ", "Pemberitahuan", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (setuju == DialogResult.Yes)
-                {
-                    DB.crud($"delete from users where id_user = '{idstok}'");
-                }
-                tampildata();
-            }
+            
         }
 
         private void guna2Button2_Click(object sender, EventArgs e)
         {
-            string idtrans = lbltrans.Text;
-            string idb = cmbidb.SelectedValue.ToString();
-            string jns = cmbjenis.Text;
-
-            string ids = (jns == "masuk" && cmbids.SelectedValue != null && !string.IsNullOrWhiteSpace(cmbids.SelectedValue.ToString()))
-                            ? cmbids.SelectedValue.ToString()
-                            : null;
-
-            decimal? beli = (jns == "masuk" && !string.IsNullOrWhiteSpace(txtbeli.Text))
-                            ? Convert.ToDecimal(txtbeli.Text)
-                            : (decimal?)null;
-
-            int msk = string.IsNullOrWhiteSpace(txtmasuk.Text) ? 0 : Convert.ToInt32(txtmasuk.Text);
-            int klr = string.IsNullOrWhiteSpace(txtkeluar.Text) ? 0 : Convert.ToInt32(txtkeluar.Text);
-            string ket = txtket.Text;
-            string idu = id_user.Text;
-
-            int stokAwal = GetStokBarang(Convert.ToInt32(idb));
-
-            int saldoAkhir = stokAwal + msk - klr;
-
-            string query = @"UPDATE stok_barang SET 
-    idb=@idb, 
-    supplier_id=@ids, 
-    harga_beli=@beli, 
-    jenis_transaksi=@jns, 
-    jumlah_masuk=@msk, 
-    jumlah_keluar=@klr, 
-    saldo_akhir=@saldoAkhir, 
-    keterangan=@ket, 
-    id_user=@idu 
-    WHERE id_transaksi=@idtrans";
-
-            using (var conn = DB.getConnection())
-            {
-                if (conn.State != System.Data.ConnectionState.Open)
-                    conn.Open();
-
-                using (var cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@idb", idb);
-                    cmd.Parameters.AddWithValue("@ids", (object)ids ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@beli", (object)beli ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@jns", jns);
-                    cmd.Parameters.AddWithValue("@msk", msk);
-                    cmd.Parameters.AddWithValue("@klr", klr);
-                    cmd.Parameters.AddWithValue("@saldoAkhir", saldoAkhir);
-                    cmd.Parameters.AddWithValue("@ket", ket);
-                    cmd.Parameters.AddWithValue("@idu", idu);
-                    cmd.Parameters.AddWithValue("@idtrans", idtrans);
-
-                    cmd.ExecuteNonQuery();
-                }
-
-                string queryBarang = "UPDATE barang SET stok=@saldoAkhir WHERE idb=@idb";
-                using (var cmdBarang = new MySqlCommand(queryBarang, conn))
-                {
-                    cmdBarang.Parameters.AddWithValue("@saldoAkhir", saldoAkhir);
-                    cmdBarang.Parameters.AddWithValue("@idb", idb);
-                    cmdBarang.ExecuteNonQuery();
-                }
-            }
-
-
-            guna2Button1.Enabled = true;
-            bersih();
-            tampildata();
+            
         }
 
         private void txtmasuk_KeyPress(object sender, KeyPressEventArgs e)
@@ -383,9 +312,15 @@ namespace PersediaanBarang
                 txtmasuk.Enabled = true;
                 txtsaldo.Text = stokAwal.ToString();
             }
-            else if (cmbjenis.Text == "keluar" || cmbjenis.Text == "penyesuaian")
+            else if (cmbjenis.Text == "keluar")
             {
                 txtmasuk.Enabled = false;
+                txtkeluar.Enabled = true;
+                txtsaldo.Text = stokAwal.ToString();
+            }
+            else if (cmbjenis.Text == "penyesuaian")
+            {
+                txtmasuk.Enabled = true;
                 txtkeluar.Enabled = true;
                 txtsaldo.Text = stokAwal.ToString();
             }
@@ -406,6 +341,32 @@ namespace PersediaanBarang
         private void guna2Panel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void lbltrans_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2TextBox1_TextChanged(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Clear();
+            DB.crud($"select * from stok_barang order by id_transaksi desc where id_transaksi like '%{txtcari.Text}%'");
+            foreach (DataRow baris in DB.ds.Tables[0].Rows)
+            {
+                string idtr = "" + baris["id_transaksi"];
+                string idb = "" + baris["idb"];
+                string idsup = "" + baris["supplier_id"];
+                string beli = "" + baris["harga_beli"];
+                string tgl = "" + baris["tanggal_transaksi"];
+                string jns = "" + baris["jenis_transaksi"];
+                string msk = "" + baris["jumlah_masuk"];
+                string klr = "" + baris["jumlah_keluar"];
+                string sld = "" + baris["saldo_akhir"];
+                string ket = "" + baris["keterangan"];
+                string user = "" + baris["id_user"];
+                dataGridView1.Rows.Add(idtr, idb, idsup, beli, tgl, jns, msk, klr, sld, ket, user);
+            }
         }
     }
 }

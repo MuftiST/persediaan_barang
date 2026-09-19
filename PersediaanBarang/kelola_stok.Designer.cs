@@ -30,7 +30,6 @@ namespace PersediaanBarang
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(kelola_stok));
-            this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.cmbids = new Guna.UI2.WinForms.Guna2ComboBox();
             this.cmbjenis = new Guna.UI2.WinForms.Guna2ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -63,29 +62,11 @@ namespace PersediaanBarang
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtcari = new Guna.UI2.WinForms.Guna2TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.guna2Panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // guna2Button2
-            // 
-            this.guna2Button2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(187)))), ((int)(((byte)(76)))));
-            this.guna2Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2Button2.ForeColor = System.Drawing.Color.White;
-            this.guna2Button2.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button2.Image")));
-            this.guna2Button2.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button2.Location = new System.Drawing.Point(801, 418);
-            this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(180, 45);
-            this.guna2Button2.TabIndex = 33;
-            this.guna2Button2.Text = "Ubah Data";
-            this.guna2Button2.Click += new System.EventHandler(this.guna2Button2_Click);
             // 
             // cmbids
             // 
@@ -137,9 +118,8 @@ namespace PersediaanBarang
             this.Column5,
             this.Column6,
             this.Column12,
-            this.Column7,
-            this.Column8});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 560);
+            this.Column13});
+            this.dataGridView1.Location = new System.Drawing.Point(12, 591);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
@@ -159,7 +139,7 @@ namespace PersediaanBarang
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
             this.guna2Button1.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button1.Image")));
             this.guna2Button1.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button1.Location = new System.Drawing.Point(326, 457);
+            this.guna2Button1.Location = new System.Drawing.Point(476, 429);
             this.guna2Button1.Name = "guna2Button1";
             this.guna2Button1.Size = new System.Drawing.Size(180, 45);
             this.guna2Button1.TabIndex = 29;
@@ -347,6 +327,7 @@ namespace PersediaanBarang
             this.lbltrans.Size = new System.Drawing.Size(120, 25);
             this.lbltrans.TabIndex = 35;
             this.lbltrans.Text = "ID_transaksi";
+            this.lbltrans.Click += new System.EventHandler(this.lbltrans_Click);
             // 
             // txtket
             // 
@@ -361,6 +342,7 @@ namespace PersediaanBarang
             this.txtket.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtket.Location = new System.Drawing.Point(703, 261);
             this.txtket.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtket.Multiline = true;
             this.txtket.Name = "txtket";
             this.txtket.PlaceholderText = "Opsional";
             this.txtket.SelectedText = "";
@@ -391,7 +373,7 @@ namespace PersediaanBarang
             // 
             this.guna2Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.guna2Panel1.Controls.Add(this.id_user);
-            this.guna2Panel1.Controls.Add(this.guna2Button2);
+            this.guna2Panel1.Controls.Add(this.guna2Button1);
             this.guna2Panel1.Controls.Add(this.txtket);
             this.guna2Panel1.Controls.Add(this.label9);
             this.guna2Panel1.Controls.Add(this.label8);
@@ -412,7 +394,7 @@ namespace PersediaanBarang
             this.guna2Panel1.Controls.Add(this.label1);
             this.guna2Panel1.Location = new System.Drawing.Point(167, 39);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(1178, 502);
+            this.guna2Panel1.Size = new System.Drawing.Size(1178, 491);
             this.guna2Panel1.TabIndex = 39;
             this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
@@ -499,19 +481,33 @@ namespace PersediaanBarang
             this.Column12.Name = "Column12";
             this.Column12.Width = 125;
             // 
-            // Column7
+            // Column13
             // 
-            this.Column7.HeaderText = "";
-            this.Column7.MinimumWidth = 6;
-            this.Column7.Name = "Column7";
-            this.Column7.Width = 125;
+            this.Column13.HeaderText = "ID_User";
+            this.Column13.MinimumWidth = 6;
+            this.Column13.Name = "Column13";
+            this.Column13.Width = 125;
             // 
-            // Column8
+            // txtcari
             // 
-            this.Column8.HeaderText = "";
-            this.Column8.MinimumWidth = 6;
-            this.Column8.Name = "Column8";
-            this.Column8.Width = 125;
+            this.txtcari.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtcari.DefaultText = "";
+            this.txtcari.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtcari.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtcari.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtcari.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtcari.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtcari.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtcari.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtcari.IconLeft = ((System.Drawing.Image)(resources.GetObject("txtcari.IconLeft")));
+            this.txtcari.Location = new System.Drawing.Point(1099, 537);
+            this.txtcari.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtcari.Name = "txtcari";
+            this.txtcari.PlaceholderText = "Cari transaksi";
+            this.txtcari.SelectedText = "";
+            this.txtcari.Size = new System.Drawing.Size(279, 48);
+            this.txtcari.TabIndex = 40;
+            this.txtcari.TextChanged += new System.EventHandler(this.guna2TextBox1_TextChanged);
             // 
             // kelola_stok
             // 
@@ -519,8 +515,8 @@ namespace PersediaanBarang
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(238)))), ((int)(((byte)(250)))));
             this.ClientSize = new System.Drawing.Size(1430, 737);
+            this.Controls.Add(this.txtcari);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.guna2Button1);
             this.Controls.Add(this.guna2Panel1);
             this.Name = "kelola_stok";
             this.Text = "kelola_stok";
@@ -533,8 +529,6 @@ namespace PersediaanBarang
         }
 
         #endregion
-
-        private Guna.UI2.WinForms.Guna2Button guna2Button2;
         private Guna.UI2.WinForms.Guna2ComboBox cmbids;
         private Guna.UI2.WinForms.Guna2ComboBox cmbjenis;
         private System.Windows.Forms.DataGridView dataGridView1;
@@ -567,7 +561,7 @@ namespace PersediaanBarang
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
-        private System.Windows.Forms.DataGridViewImageColumn Column7;
-        private System.Windows.Forms.DataGridViewImageColumn Column8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
+        private Guna.UI2.WinForms.Guna2TextBox txtcari;
     }
 }

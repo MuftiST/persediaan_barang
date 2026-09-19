@@ -95,5 +95,17 @@ namespace PersediaanBarang
         {
             tampildata();
         }
+
+        private void txtcari_TextChanged(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Clear();
+            DB.crud($"select * from satuan where nama_satuan like '%{txtcari.Text}%'");
+            foreach (DataRow brs in DB.ds.Tables[0].Rows)
+            {
+                string idk = "" + brs["id_satuan"];
+                string nmk = "" + brs["nama_satuan"];
+                dataGridView1.Rows.Add(idk, nmk);
+            }
+        }
     }
 }
