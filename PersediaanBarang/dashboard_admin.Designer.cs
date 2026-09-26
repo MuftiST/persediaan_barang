@@ -54,6 +54,7 @@ namespace PersediaanBarang
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.pnlkonten = new System.Windows.Forms.Panel();
+            this.guna2Button11 = new Guna.UI2.WinForms.Guna2Button();
             this.pnltop.SuspendLayout();
             this.pnlside.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -128,6 +129,7 @@ namespace PersediaanBarang
             this.flowLayoutPanel1.Controls.Add(this.pnlbrg);
             this.flowLayoutPanel1.Controls.Add(this.guna2Button6);
             this.flowLayoutPanel1.Controls.Add(this.label5);
+            this.flowLayoutPanel1.Controls.Add(this.guna2Button11);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(7, 6);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(211, 725);
@@ -406,6 +408,25 @@ namespace PersediaanBarang
             this.pnlkonten.TabIndex = 2;
             this.pnlkonten.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
+            // guna2Button11
+            // 
+            this.guna2Button11.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button11.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button11.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button11.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button11.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(49)))), ((int)(((byte)(126)))));
+            this.guna2Button11.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2Button11.ForeColor = System.Drawing.Color.White;
+            this.guna2Button11.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(185)))), ((int)(((byte)(129)))));
+            this.guna2Button11.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button11.Image")));
+            this.guna2Button11.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.guna2Button11.Location = new System.Drawing.Point(3, 619);
+            this.guna2Button11.Name = "guna2Button11";
+            this.guna2Button11.Size = new System.Drawing.Size(202, 45);
+            this.guna2Button11.TabIndex = 16;
+            this.guna2Button11.Text = "Cetak Laporan";
+            this.guna2Button11.Click += new System.EventHandler(this.guna2Button11_Click_1);
+            // 
             // dashboard_admin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -414,6 +435,7 @@ namespace PersediaanBarang
             this.Controls.Add(this.pnlkonten);
             this.Controls.Add(this.pnlside);
             this.Controls.Add(this.pnltop);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "dashboard_admin";
             this.Text = "dashboard_admin";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -457,5 +479,6 @@ namespace PersediaanBarang
         private Guna.UI2.WinForms.Guna2Button guna2Button9;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label idu;
+        private Guna.UI2.WinForms.Guna2Button guna2Button11;
     }
 }

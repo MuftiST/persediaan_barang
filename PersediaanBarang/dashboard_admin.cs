@@ -178,5 +178,11 @@ namespace PersediaanBarang
             kelola_satuan satu = new kelola_satuan() { TopLevel = false, TopMost = true };
             KF.untukform(satu, pnlkonten);
         }
+
+        private void guna2Button11_Click_1(object sender, EventArgs e)
+        {
+            cetak_laporan cetak = new cetak_laporan() { TopLevel = false, TopMost = true };
+            KF.untukform(cetak, pnlkonten);
+        }
     }
 }
