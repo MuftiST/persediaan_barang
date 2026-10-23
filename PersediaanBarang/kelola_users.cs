@@ -218,5 +218,12 @@ namespace PersediaanBarang
                 dataGridView1.Rows.Add(idu, nm, user, pass, role, email, telp, status);
             }
         }
+
+        private void guna2Button3_Click_1(object sender, EventArgs e)
+        {
+            laporan_user ls = new laporan_user();
+            ls.Visible = true;
+            this.Hide();
+        }
     }
 }
