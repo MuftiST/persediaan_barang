@@ -319,6 +319,7 @@ namespace PersediaanBarang
             this.chart1.Size = new System.Drawing.Size(579, 319);
             this.chart1.TabIndex = 2;
             this.chart1.Text = "chart1";
+            this.chart1.Click += new System.EventHandler(this.chart1_Click);
             // 
             // chart2
             // 

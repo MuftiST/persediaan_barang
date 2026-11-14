@@ -13,6 +13,8 @@ using ClosedXML.Excel;
 using System.Diagnostics;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
 
 namespace PersediaanBarang
 {
@@ -242,7 +244,12 @@ namespace PersediaanBarang
         }
         private void guna2Button2_Click_1(object sender, EventArgs e)
         {
-            ExportToPDF(dataGridView1, @"D:\laporan.pdf");
+            ReportDocument rpt = new ReportDocument();
+            rpt.Load("LAPORAN TRANSAKSI STOK BARANG.rpt");
+
+            string pdfpath = Path.Combine(Path.GetTempPath(), "LAPORAN DATA BARANG.pdf");
+            rpt.ExportToDisk(ExportFormatType.PortableDocFormat, pdfpath);
+            System.Diagnostics.Process.Start(pdfpath);
         }
     }
 }

@@ -41,5 +41,22 @@ namespace PersediaanBarang
         {
 
         }
+
+        private void guna2Button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2Button4_Click(object sender, EventArgs e)
+        {
+            kelola_stok stok = new kelola_stok() { TopLevel = false, TopMost = true };
+            stok.idu = id_user;
+            KF.untukform(stok, pnlkonten);
+        }
+
+        private void guna2Button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

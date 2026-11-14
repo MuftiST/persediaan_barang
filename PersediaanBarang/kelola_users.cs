@@ -225,5 +225,10 @@ namespace PersediaanBarang
             ls.Visible = true;
             this.Hide();
         }
+
+        private void txtnama_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

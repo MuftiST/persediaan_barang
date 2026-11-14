@@ -31,5 +31,10 @@ namespace PersediaanBarang
             DB.crud($"select count(*) as total from stok_barang");
             lbltrans.Text = DB.ds.Tables[0].Rows[0]["total"].ToString() + " transaksi";
         }
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

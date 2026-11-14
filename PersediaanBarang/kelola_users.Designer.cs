@@ -59,8 +59,8 @@ namespace PersediaanBarang
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.txtid = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
-            this.txtcari = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
+            this.txtcari = new Guna.UI2.WinForms.Guna2TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.guna2Panel1.SuspendLayout();
             this.SuspendLayout();
@@ -351,6 +351,7 @@ namespace PersediaanBarang
             this.txtnama.SelectedText = "";
             this.txtnama.Size = new System.Drawing.Size(201, 39);
             this.txtnama.TabIndex = 32;
+            this.txtnama.TextChanged += new System.EventHandler(this.txtnama_TextChanged);
             this.txtnama.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtnama_KeyPress);
             // 
             // cmbstatus
@@ -432,6 +433,23 @@ namespace PersediaanBarang
             this.guna2Panel1.Size = new System.Drawing.Size(1152, 512);
             this.guna2Panel1.TabIndex = 52;
             // 
+            // guna2Button3
+            // 
+            this.guna2Button3.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button3.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button3.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button3.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.guna2Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2Button3.ForeColor = System.Drawing.Color.White;
+            this.guna2Button3.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.guna2Button3.Location = new System.Drawing.Point(956, 441);
+            this.guna2Button3.Name = "guna2Button3";
+            this.guna2Button3.Size = new System.Drawing.Size(180, 45);
+            this.guna2Button3.TabIndex = 52;
+            this.guna2Button3.Text = "Ke Form Cetak Data";
+            this.guna2Button3.Click += new System.EventHandler(this.guna2Button3_Click_1);
+            // 
             // txtcari
             // 
             this.txtcari.Cursor = System.Windows.Forms.Cursors.IBeam;
@@ -452,23 +470,6 @@ namespace PersediaanBarang
             this.txtcari.Size = new System.Drawing.Size(305, 48);
             this.txtcari.TabIndex = 53;
             this.txtcari.TextChanged += new System.EventHandler(this.txtcari_TextChanged);
-            // 
-            // guna2Button3
-            // 
-            this.guna2Button3.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button3.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button3.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button3.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.guna2Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2Button3.ForeColor = System.Drawing.Color.White;
-            this.guna2Button3.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button3.Location = new System.Drawing.Point(956, 441);
-            this.guna2Button3.Name = "guna2Button3";
-            this.guna2Button3.Size = new System.Drawing.Size(180, 45);
-            this.guna2Button3.TabIndex = 52;
-            this.guna2Button3.Text = "Ke Form Cetak Data";
-            this.guna2Button3.Click += new System.EventHandler(this.guna2Button3_Click_1);
             // 
             // kelola_users
             // 
